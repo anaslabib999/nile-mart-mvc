@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Nile Mart - New Product')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu}"></nav>
+
+<h1>New Product</h1>
+
+<form th:action="@{/products}" th:object="${product}" method="post">
+    <label>SKU
+        <input type="text" th:field="*{sku}">
+        <span class="error" th:if="${#fields.hasErrors('sku')}" th:errors="*{sku}"></span>
+    </label>
+    <label>Name
+        <input type="text" th:field="*{name}">
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </label>
+    <label>Category
+        <select th:field="*{category}">
+            <option value="">-- Select a sub-category --</option>
+            <option th:each="c : ${subCategories}" th:value="${c.slug}" th:text="${c.name}"></option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></span>
+    </label>
+    <label>Brand
+        <select th:field="*{brandSlug}">
+            <option value="">No brand</option>
+            <option th:each="b : ${activeBrands}" th:value="${b.slug}" th:text="${b.name}"></option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('brandSlug')}" th:errors="*{brandSlug}"></span>
+    </label>
+    <label>Price
+        <input type="text" th:field="*{price}">
+        <span class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></span>
+    </label>
+    <label>Stock
+        <input type="text" th:field="*{inStock}">
+        <span class="error" th:if="${#fields.hasErrors('inStock')}" th:errors="*{inStock}"></span>
+    </label>
+    <button type="submit">Save product</button>
+</form>
+<p><a th:href="@{/products}">Back to products</a></p>
+
+</body>
+</html>

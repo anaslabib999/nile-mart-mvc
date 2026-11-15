@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: head('Nile Mart - New Category')}"></head>
+<body>
+<nav th:replace="~{fragments :: menu}"></nav>
+
+<h1>New Category</h1>
+
+<form th:action="@{/categories}" th:object="${category}" method="post">
+    <label>Name
+        <input type="text" th:field="*{name}">
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+    </label>
+    <label>Slug
+        <input type="text" th:field="*{slug}">
+        <span class="error" th:if="${#fields.hasErrors('slug')}" th:errors="*{slug}"></span>
+    </label>
+    <label>Parent
+        <select th:field="*{parentSlug}">
+            <option value="">None (top level)</option>
+            <option th:each="c : ${topLevelCategories}" th:value="${c.slug}" th:text="${c.name}"></option>
+        </select>
+        <span class="error" th:if="${#fields.hasErrors('parentSlug')}" th:errors="*{parentSlug}"></span>
+    </label>
+    <label>Display order
+        <input type="text" th:field="*{displayOrder}">
+        <span class="error" th:if="${#fields.hasErrors('displayOrder')}" th:errors="*{displayOrder}"></span>
+    </label>
+    <label>
+        <input type="checkbox" th:field="*{active}"> Active
+    </label>
+    <button type="submit">Save category</button>
+</form>
+<p><a th:href="@{/categories}">Back to categories</a></p>
+
+</body>
+</html>
